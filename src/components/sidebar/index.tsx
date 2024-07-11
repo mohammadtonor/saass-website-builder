@@ -1,4 +1,4 @@
-import { getAthUserDetails } from '@/lib/queries';
+import { getAuthUserDetails  } from '@/lib/queries';
 import React from 'react'
 import MenuOptions from './menu-options';
 
@@ -8,7 +8,7 @@ type Props = {
 }
 
 const Sidebar = async ({id, type}: Props) => {
-    const user  = await getAthUserDetails();
+    const user  = await getAuthUserDetails ();
     if(!user) return null;
 
     if(!user.Agency) return;

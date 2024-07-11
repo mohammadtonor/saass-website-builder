@@ -1,5 +1,5 @@
 import AgencyDetails from '@/components/forms/agency-details';
-import { getAthUserDetails, verifyAndAcceptInvitation } from '@/lib/queries';
+import { getAuthUserDetails , verifyAndAcceptInvitation } from '@/lib/queries';
 import { currentUser } from '@clerk/nextjs'
 import { Plan } from '@prisma/client';
 import { redirect } from 'next/navigation';
@@ -13,7 +13,7 @@ const Page = async ({
   const agencyId = await verifyAndAcceptInvitation();
 
   // Get User Details
-  const user = await getAthUserDetails();
+  const user = await getAuthUserDetails ();
   if(agencyId) {
     if(user?.role === 'SUBACCOUNT_GUEST' || user?.role === 'SUBACCOUNT_USER') {
       return redirect('/subaccount');
