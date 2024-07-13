@@ -9,6 +9,7 @@ import { Card } from '../ui/card'
 import { Switch } from '../ui/switch'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { ModeToggle } from './mode-toggle'
+import { Separator } from '../ui/separator'
 
 type Props = {
     notifications: NotificationWithUser | []
@@ -33,7 +34,7 @@ const InfoBar = ({notifications, subAccountId, className, role}: Props) => {
         }
         setShowAll((prev) => !prev);
     }
-
+    
   return (
     <div
     className={twMerge(
@@ -60,27 +61,32 @@ const InfoBar = ({notifications, subAccountId, className, role}: Props) => {
                         </SheetDescription>
                     </SheetHeader>
                     {allNotifications?.map(notification => (
-                        <div key={notification.id} className="flex flex-col gap-y-2 overflow-x-scroll mb-2 text-ellipsis">
-                            <Avatar>
-                                <AvatarImage
-                                    src={notification.User.avatarUrl}
-                                    alt='Profile Picture'
-                                />
-                                <AvatarFallback className='bg-primary'>
-                                    {notification.User.name.slice(0,2).toUpperCase()}
-                                </AvatarFallback>
-                            </Avatar>
-                            <div className='flex flex-col'>
-                                <p>
-                                    <span className='font-bold'>{notification.notification.split("|")[0]}</span>
-                                    <span className='text-muted-foreground'>{notification.notification.split("|")[1]}</span>
-                                    <span className='font-bold'>{notification.notification.split("|")[2]}</span>
-                                </p>
-                                <small className='text-xs text-muted-foreground'>
-                                    {new Date(notification.createdAt).toLocaleDateString()}
-                                </small>
+                        <div key={notification.id} className="flex flex-col gap-y-2  mb-2 text-ellipsis">
+                            <div className="flex gap-4">    
+                                <Avatar>
+                                    <AvatarImage
+                                        src={notification.User.avatarUrl}
+                                        alt='Profile Picture'
+                                    />
+                                    <AvatarFallback className='bg-primary'>
+                                        {notification.User.name.slice(0, 2).toUpperCase()}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div className='flex flex-col'>
+                                    <p>
+                                        <span className='font-bold'>{notification.notification.split("|")[0]}</span>
+                                        <span className='text-muted-foreground'>{notification.notification.split("|")[1]}</span>
+                                        <span className='font-bold'>{notification.notification.split("|")[2]}</span>
+                                    </p>
+                                    <small className='text-xs text-muted-foreground'>
+                                        {new Date(notification.createdAt).toLocaleDateString()}
+                                    </small>
+
+                                </div>
                             </div>
+                            <Separator className='my-1'/>
                         </div>
+                        
                     ))}
                     {allNotifications?.length === 0 && (
                         <div className="flex items-center justify-center mb-4">

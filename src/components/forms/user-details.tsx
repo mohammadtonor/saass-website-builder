@@ -23,8 +23,8 @@ import { v4 } from 'uuid';
 type Props = {
     id: string | null;
     type: "agency" | "subaccount";
-    userData: Partial<User>
-    subAccounts: SubAccount[]
+    userData?: Partial<User>
+    subAccounts?: SubAccount[]
 }
 
 const UserDetails = ({id, type, userData, subAccounts}: Props) => {
@@ -73,9 +73,11 @@ const UserDetails = ({id, type, userData, subAccounts}: Props) => {
         if(!data?.user) return;
         const getPermissions = async () => {
             const permissions = await getUserPermissions(data?.user?.id)
+            
             setSubAccountPermissios(permissions)
-        }
-    }, [data, form]);
+          }
+          getPermissions()
+        }, [data, form]);
 
     const onChangePermission = async (
       subAccountId: string,
@@ -84,6 +86,7 @@ const UserDetails = ({id, type, userData, subAccounts}: Props) => {
     ) => {
       if(!data.user?.email) return;
       setloadingPermissions(true);
+      
       const response = await changeUserPermissions(
         permissionId ? permissionId : v4() ,
         data.user.email,
@@ -161,6 +164,7 @@ const UserDetails = ({id, type, userData, subAccounts}: Props) => {
           console.log('Error could not submit')
         }
       }
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -298,17 +302,23 @@ const UserDetails = ({id, type, userData, subAccounts}: Props) => {
                         {subAccounts?.map((subAccount) => {
                             const subAccountPermissionDetails = subAccountPermissios?.Permissions.find((p) => p.subAccountId === subAccount.id) 
                             return (
-                                <div className='flex flex-col items-center justify-between rounded-lg border p-4'>
-                                    <div>
-                                        <p>{subAccount.name}</p>
-                                    </div>
-                                    <Switch 
-                                        disabled={loadingPermissions}
-                                        checked={subAccountPermissionDetails?.access}
-                                        onCheckedChange={() => {}}
-                                    />
+                              <div className="flex items-center justify-between rounded-lg border p-4">
+                                <div>
+                                  <p>{subAccount.name}</p>
                                 </div>
-                            )
+                                <Switch
+                                  disabled={loadingPermissions}
+                                  checked={subAccountPermissionDetails?.access}
+                                  onCheckedChange={(permission) => {
+                                    onChangePermission(
+                                      subAccount?.id,
+                                      permission,
+                                      subAccountPermissionDetails?.id
+                                    )
+                                  }}
+                                />
+                              </div>
+                            );
                         })}
                     </div>
                 </div>
