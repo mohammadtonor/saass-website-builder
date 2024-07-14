@@ -196,6 +196,7 @@ const CellActions: React.FC<CellActionsProps> = ({ rowData }) => {
                     type="agency"
                     id={rowData?.Agency?.id || null}
                     subAccounts={rowData?.Agency?.SubAccount}
+                    userData={rowData}
                   />
                 </CustomModal>,
                 async () => {

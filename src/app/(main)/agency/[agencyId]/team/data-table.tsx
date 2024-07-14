@@ -74,7 +74,7 @@ export default function Datatable<TData, TValue>({
             {actionButtonText}
           </Button>
         </div>
-        <div className="border bg-background rounded-lg">
+        <div className="border bg-background rounded-lg mt-4">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (

@@ -100,7 +100,7 @@ const UserDetails = ({id, type, userData, subAccounts}: Props) => {
             subAccountPermissios?.Permissions.find(
               (p) => p.subAccountId === subAccountId
             )?.SubAccount.name
-          } `,
+          }`,
           subaccountId: subAccountPermissios?.Permissions.find(
             (p) => p.subAccountId === subAccountId
           )?.SubAccount.id,
@@ -129,6 +129,7 @@ const UserDetails = ({id, type, userData, subAccounts}: Props) => {
       router.refresh();
       setloadingPermissions(false);
     }
+console.log(userData?.name);
 
     const onSubmit = async (values: z.infer<typeof userDataSchema>) => {
         if (!id) return

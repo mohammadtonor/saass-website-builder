@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { Agency, AgencySidebarOption, Plan, Role, SubAccount, User } from "@prisma/client";
 import { v4 } from "uuid";
 import { access } from "fs";
+import { CreateMediaType } from "./types";
 
 export const getAuthUserDetails  = async () => {
     const user = await currentUser();
@@ -47,6 +48,8 @@ export const saveActivityLogNotification = async ({
     subaccountId?: string,
 }) => {
     const authUser = await currentUser();
+    console.log(subaccountId);
+    
     let userData;
     if (!authUser) {
         const response = await db.user.findFirst({
@@ -138,7 +141,6 @@ export const verifyAndAcceptInvitation = async () => {
     });
     
     if (invitationExists) {
-      console.log(user.emailAddresses[0].emailAddress);
         const userDetails = await createTeamUser(invitationExists.agencyId, {
             email: invitationExists.email,
             name: `${user.firstName} ${user.lastName}`,
@@ -530,4 +532,28 @@ export const getUserPermissions = async (userId?: string) => {
     }
   
     return resposne
+  }
+
+  export const getMedia = async (subaccount: string) => {
+    const mediafiles = await db.subAccount.findUnique({
+      where: {
+        id: subaccount,
+      },
+      include: { Media: true },
+    });
+    return mediafiles;
+  }
+
+  export const createMedia = async (
+    subaccountId: string,
+    mediaData: CreateMediaType
+  ) => {
+    const mediafile = await db.media.create({
+      data: {
+        link: mediaData.link,
+        name: mediaData.name,
+        subAccountId: subaccountId,
+      },
+    });
+    return mediafile;
   }

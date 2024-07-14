@@ -4,7 +4,7 @@ type Props = {}
 
 const SubaccountIdPage = (props: Props) => {
   return (
-    <div>SubaccountId Page</div>
+    <div className=''>SubaccountId Page</div>
   )
 }
 
