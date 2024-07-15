@@ -97,9 +97,7 @@ const AgencyDetails = ({data}: Props) => {
       newUserData = await initUser({
         role: "AGENCY_OWNER",
       });
-      
-      console.log("handle submiting");
-      
+            
       if(!data?.id) {
         const response = await upsertAgency({
           id: data?.id ? data.id : v4(),

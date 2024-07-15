@@ -9,7 +9,6 @@ type Props = {
 
 const DeleteButton = ({subaccountId}: Props) => {
     const router = useRouter();
-console.log(subaccountId);
 
   return (
     <div

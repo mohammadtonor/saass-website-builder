@@ -3,10 +3,11 @@
 import { clerkClient, currentUser } from "@clerk/nextjs";
 import { db } from "./db";
 import { redirect } from "next/navigation";
-import { Agency, AgencySidebarOption, Plan, Role, SubAccount, User } from "@prisma/client";
+import { Agency, AgencySidebarOption, Lane, Plan, Prisma, Role, SubAccount, Ticket, User } from "@prisma/client";
 import { v4 } from "uuid";
 import { access } from "fs";
-import { CreateMediaType } from "./types";
+import { CreateFunnelFormSchema, CreateMediaType } from "./types";
+import { z } from "zod";
 
 export const getAuthUserDetails  = async () => {
     const user = await currentUser();
@@ -48,7 +49,6 @@ export const saveActivityLogNotification = async ({
     subaccountId?: string,
 }) => {
     const authUser = await currentUser();
-    console.log(subaccountId);
     
     let userData;
     if (!authUser) {
@@ -229,12 +229,6 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
     if(!agency.companyEmail) return null;
 
     try {
-        console.log(agency);
-        // const agencyDetails = await db.agency.create({
-        //     data: {
-        //         ...agency
-        //     }
-        // })
         const agencyDetails = await db.agency.upsert({
             where: {
               id: agency.id,
@@ -556,4 +550,123 @@ export const getUserPermissions = async (userId?: string) => {
       },
     });
     return mediafile;
+  }
+
+  export const deleteMedia = async  (mediaId: string) => {
+    const response = db.media.delete({
+      where: {id: mediaId}
+    });
+
+    return response;
+  }
+
+  export const getPipelineDetails = async (piplineId: string) => {
+    const response = db.pipeline.findUnique({
+      where: {
+        id: piplineId
+      }
+    })
+    return response;
+  } 
+
+  export const getLaneswithTicketsAndTags = async (piplineId: string) =>{
+    const response = await db.lane.findMany({
+      where: {
+        pipelineId: piplineId
+      },
+      include: {
+        Tickets: {
+          orderBy: {
+            order: "desc"
+          },
+          include: {
+            Tags: true,
+            Assigned: true,
+            Customer: true,
+          }
+        }
+      }
+    });
+
+    return response;
+  }
+
+  export const upsertFunnel = async (
+    subaccountId: string,
+    funnel: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string },
+    funnelId: string
+  ) => {
+    const response = await db.funnel.upsert({
+      where: { id: funnelId },
+      update: funnel,
+      create: {
+        ...funnel,
+        id: funnelId || v4(),
+        subAccountId: subaccountId,
+      },
+    })
+  
+    return response
+  }
+  
+  export const upsertPipeline = async (
+    pipeline: Prisma.PipelineUncheckedCreateWithoutLaneInput
+  ) => {
+    const response = await db.pipeline.upsert({
+      where: { id: pipeline.id || v4() },
+      update: {
+        name: pipeline.name
+      },
+      create: pipeline,
+    })
+  
+    return response
+  }
+  
+  export const deletePipeline = async (pipelineId: string) => {
+    const response = await db.pipeline.delete({
+      where: { id: pipelineId },
+    })
+    return response;
+  }
+
+  export const updateLanesOrder = async (lanes: Lane[]) => {
+    try {
+      const updateTrans = lanes.map((lane) =>
+        db.lane.update({
+          where: {
+            id: lane.id,
+          },
+          data: {
+            order: lane.order,
+          },
+        })
+      )
+  
+      await db.$transaction(updateTrans)
+      console.log('🟢 Done reordered 🟢')
+    } catch (error) {
+      console.log(error, '🔴 ERROR UPDATE LANES ORDER')
+    }
+  }
+
+  export const updateTicketsOrder = async (tickets: Ticket[]) => {
+    try {
+      const updateTrans = tickets.map((ticket) =>
+        db.ticket.update({
+          where: {
+            id: ticket.id,
+          },
+          data: {
+            order: ticket.order,
+            laneId: ticket.laneId,
+          },
+        })
+      )
+  
+      await db.$transaction(updateTrans)
+      console.log('🟢 Done reordered 🟢')
+    } catch (error) {
+      console.log(error, '🔴 ERROR UPDATE TICKET ORDER')
+    }
   }
