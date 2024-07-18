@@ -861,3 +861,23 @@ export const getUserPermissions = async (userId?: string) => {
     return response;
   }
   
+  export const upsertContact = async (
+    contact: Prisma.ContactUncheckedCreateInput
+  ) => {
+    const response = await db.contact.upsert({
+      where: { id: contact.id || v4() },
+      update: {
+        name: contact.name,
+        email: contact.email,
+      },
+      create: contact,
+    });
+    return response
+  }
+
+  export const deleteContact = async (contactId?: string) => {
+    const response = await db.contact.delete({
+      where: { id: contactId },
+    });
+    return response;
+  }

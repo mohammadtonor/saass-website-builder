@@ -91,17 +91,17 @@ console.log(laneAmt);
   }
 
   const handleEditLane = () => {
-    setOpen(
-      <CustomModal
-        title="Edit Lane Details"
-        subheading=""
-      >
-        <LaneForm
-          pipelineId={pipelineId}
-          defaultData={laneDetails}
-        />
-      </CustomModal>
-    )
+      setOpen(
+        <CustomModal
+          title="Edit Lane Details"
+          subheading=""
+        >
+          <LaneForm
+            pipelineId={pipelineId}
+            defaultData={laneDetails}
+          />
+        </CustomModal>
+      )
   }
 
   const handleDeleteLane = async () => {
