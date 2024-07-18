@@ -5,7 +5,7 @@ import { SubAccount, User } from '@prisma/client';
 import React, { useEffect, useState } from 'react'
 import { useToast } from '../ui/use-toast';
 import { useRouter } from 'next/navigation';
-import { changeUserPermissions, getAuthUserDetails, getUserPermissions, saveActivityLogNotification, updateUser } from '@/lib/queries';
+import { changeUserPermissions, getAuthUserDetails, getUserPermissions, saveActivityLogsNotification, updateUser } from '@/lib/queries';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -94,7 +94,7 @@ const UserDetails = ({id, type, userData, subAccounts}: Props) => {
         val,
       )
       if(type === "agency") {
-        await saveActivityLogNotification({
+        await saveActivityLogsNotification({
           agencyId: authUserData?.Agency?.id,
           description: `Gave ${userData?.name} access to | ${
             subAccountPermissios?.Permissions.find(
@@ -139,7 +139,7 @@ const UserDetails = ({id, type, userData, subAccounts}: Props) => {
               (p) => p.subAccountId === subacc.id && p.access
             )
           ).forEach(async (subaccount) => {
-            await saveActivityLogNotification({
+            await saveActivityLogsNotification({
               agencyId: undefined,
               description: `Updated ${userData?.name} information`,
               subaccountId: subaccount.id,

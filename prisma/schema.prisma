@@ -149,8 +149,8 @@ model Tag {
   subAccountId String   
   SubAccount SubAccount @relation(fields: [subAccountId], references: [id], onDelete: Cascade)
 
-  ticket_ids String[]   
-  ticket     Ticket[]   @relation(fields: [ticket_ids], references: [id])
+  ticket_ids String[]  
+  ticket     Ticket[]  @relation(fields: [ticket_ids], references: [id])
 
   @@index([subAccountId])
 }
@@ -188,10 +188,10 @@ model Ticket {
   laneId      String   
   order       Int      @default(0)
   Lane        Lane     @relation(fields: [laneId], references: [id], onDelete: Cascade)
-  value       BigInt?
+  value       String?
   description String?
 
-  tag_ids    String[] 
+  tag_ids   String[]
   Tags       Tag[]   @relation(fields: [tag_ids], references: [id])
 
   customerId String?  

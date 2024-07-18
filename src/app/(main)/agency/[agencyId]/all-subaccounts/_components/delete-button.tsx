@@ -1,5 +1,5 @@
 "use client"
-import { deleteSubaccount, getSubaccountDetails, saveActivityLogNotification } from '@/lib/queries'
+import { deleteSubaccount, getSubaccountDetails, saveActivityLogsNotification } from '@/lib/queries'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -16,7 +16,7 @@ const DeleteButton = ({subaccountId}: Props) => {
         onClick={async () => {
             const response = await getSubaccountDetails(subaccountId)
             console.log(response?.agencyId);
-            await saveActivityLogNotification({
+            await saveActivityLogsNotification({
                 agencyId: response?.agencyId,
                 description: `Deleted sub account | ${response?.name}`,
                 subaccountId,

@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
-import { createMedia, saveActivityLogNotification } from '@/lib/queries'
+import { createMedia, saveActivityLogsNotification } from '@/lib/queries'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import FileUpload from '../global/file-upload'
@@ -36,7 +36,7 @@ const UploadMediaForm = ({subaccountId}: Props) => {
     async function onSubmit (values: z.infer<typeof formSchema>) {
         try {
             const response = await createMedia(subaccountId, values)
-            await saveActivityLogNotification({
+            await saveActivityLogsNotification({
                 agencyId: undefined,
                 description: `Uploaded a media file | ${response.name}`,
                 subaccountId,

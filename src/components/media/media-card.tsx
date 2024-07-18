@@ -7,7 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import Image from 'next/image'
 import { Copy, MoreHorizontal, Trash } from 'lucide-react'
 import { toast } from '../ui/use-toast'
-import { deleteMedia, saveActivityLogNotification } from '@/lib/queries'
+import { deleteMedia, saveActivityLogsNotification } from '@/lib/queries'
 
 type Props = {file: Media}
 
@@ -77,7 +77,7 @@ const MediaCard = ({file}: Props) => {
           onClick={async () => {
             setLoading(true)
             const response = await deleteMedia(file.id)
-            await saveActivityLogNotification({
+            await saveActivityLogsNotification({
               agencyId: undefined,
               description: `Deleted a media file | ${response?.name}`,
               subaccountId: response.subAccountId,

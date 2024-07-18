@@ -28,7 +28,7 @@ import {
 } from '../ui/select'
 import { Button } from '../ui/button'
 import Loading from '../global/loading'
-import { saveActivityLogNotification, sendInvitation } from '@/lib/queries'
+import { saveActivityLogsNotification, sendInvitation } from '@/lib/queries'
 import { useToast } from '../ui/use-toast'
 
 interface SendInvitationProps {
@@ -54,7 +54,7 @@ const SendInvitation: React.FC<SendInvitationProps> = ({ agencyId }) => {
   const onSubmit = async (values: z.infer<typeof userDataSchema>) => {
     try {
       const res = await sendInvitation(values.role, values.email, agencyId)
-      await saveActivityLogNotification({
+      await saveActivityLogsNotification({
         agencyId: agencyId,
         description: `Invited ${res.email}`,
         subaccountId: undefined,

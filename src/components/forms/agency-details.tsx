@@ -16,7 +16,7 @@ import * as z from 'zod';
 import FileUpload from '../global/file-upload';
 import { Input } from '../ui/input';
 import { Switch } from '../ui/switch';
-import { deleteAgancy, initUser, saveActivityLogNotification, updateAgencyGoal, upsertAgency } from '@/lib/queries';
+import { deleteAgancy, initUser, saveActivityLogsNotification, updateAgencyGoal, upsertAgency } from '@/lib/queries';
 import Loading from '../global/loading';
 import { Button } from '../ui/button';
 
@@ -339,7 +339,7 @@ const AgencyDetails = ({data}: Props) => {
                     onValueChange={async (val: number) => {
                       if (!data?.id) return;
                       await updateAgencyGoal(data?.id, { goal: val });
-                      await saveActivityLogNotification({
+                      await saveActivityLogsNotification({
                         agencyId: data?.id,
                         description: `Updated Agency Goal to ${val} Subaccount`,
                         subaccountId: undefined,
