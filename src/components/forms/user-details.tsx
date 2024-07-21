@@ -302,7 +302,7 @@ const UserDetails = ({id, type, userData, subAccounts}: Props) => {
                         {subAccounts?.map((subAccount) => {
                             const subAccountPermissionDetails = subAccountPermissios?.Permissions.find((p) => p.subAccountId === subAccount.id) 
                             return (
-                              <div className="flex items-center justify-between rounded-lg border p-4">
+                              <div key={subAccount.id} className="flex items-center justify-between rounded-lg border p-4">
                                 <div>
                                   <p>{subAccount.name}</p>
                                 </div>

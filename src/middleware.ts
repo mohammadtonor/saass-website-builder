@@ -1,4 +1,4 @@
-import { authMiddleware, clerkMiddleware } from "@clerk/nextjs/server";
+import { authMiddleware } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { env } from "process";
 
