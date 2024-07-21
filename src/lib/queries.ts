@@ -191,10 +191,10 @@ export const updateAgencyGoal = async (
      return response;
 }
 
-export const deleteAgancy = async (agencyId?: string) => {
+export const deleteAgancy = async (agencyId?: string) => {  
     const response = await db.agency.delete({
         where: { id: agencyId },
-    });
+    });    
     return response;
 }
 
