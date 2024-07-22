@@ -21,7 +21,8 @@ const SubaccountLayout = async ({children, params}: Props) => {
     if(!user) return redirect('/');
 
     let notifications: any = []
-
+    console.log(user.privateMetadata.role);
+    
     if (!user.privateMetadata.role) {
         return <Unauthorized />
       } else {

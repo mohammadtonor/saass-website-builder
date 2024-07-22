@@ -106,8 +106,9 @@ const AgencyDetails = ({data}: Props) => {
       }
 
       newUserData = await initUser({ role: 'AGENCY_OWNER' })
-      if (!data?.id && !custId) return
-
+      if (!data?.customerId && !custId) return
+      console.log(data?.customerId, custId);
+      
       const response = await upsertAgency({
         id: data?.id ? data.id : v4(),
         customerId: data?.customerId || custId || '',
