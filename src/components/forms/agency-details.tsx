@@ -132,6 +132,8 @@ const AgencyDetails = ({ data }: Props) => {
         const customerData: { customerId: string } =
           await customerResponse.json()
         custId = customerData.customerId
+        console.log(customerData);
+        
       }
 
       newUserData = await initUser({ role: 'AGENCY_OWNER' })
