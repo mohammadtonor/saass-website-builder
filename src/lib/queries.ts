@@ -3,7 +3,7 @@
 import { clerkClient, currentUser } from "@clerk/nextjs";
 import { db } from "./db";
 import { redirect } from "next/navigation";
-import { Agency, AgencySidebarOption, Lane, Plan, Prisma, Role, SubAccount, Tag, Ticket, User } from "@prisma/client";
+import { Agency, Lane, Plan, Prisma, Role, SubAccount, Tag, Ticket, User } from "@prisma/client";
 import { v4 } from "uuid";
 import { access } from "fs";
 import { CreateFunnelFormSchema, CreateMediaType, UpsertFunnelPage } from "./types";
@@ -181,7 +181,7 @@ export const verifyAndAcceptInvitation = async () => {
 }
 
 
-export const updateAgencyGoal = async (
+export const updateAgencyDetails = async (
     agencyId: string,
     agencyDetails: Partial<Agency>
 ) => {
