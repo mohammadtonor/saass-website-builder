@@ -31,6 +31,7 @@ const FunnelSettings: React.FC<FunnelSettingsProps> = async ({
       id: subaccountId,
     },
   })
+console.log(subaccountDetails?.connectAccountId);
 
   if (!subaccountDetails) return
  if (!subaccountDetails.connectAccountId) return

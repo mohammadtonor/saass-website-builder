@@ -50,6 +50,8 @@ export async function POST(req: Request) {
       })
     } else {
       console.log('Createing a sub')
+      console.log(customerId,priceId);
+      
       const subscription = await stripe.subscriptions.create({
         customer: customerId,
         items: [

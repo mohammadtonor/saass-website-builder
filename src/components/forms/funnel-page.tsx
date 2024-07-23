@@ -177,6 +177,10 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({
                       description: `Deleted a funnel page | ${response?.name}`,
                       subaccountId: subaccountId,
                     })
+                    toast({
+                      title: 'Success',
+                      description: 'Delete Funnel Page Details',
+                    })
                     router.refresh()
                   }}
                 >
