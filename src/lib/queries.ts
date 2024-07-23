@@ -245,6 +245,7 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
                 state: agency.state,
                 whiteLabel: agency.whiteLabel,
                 agencyLogo: agency.agencyLogo,
+                customerId: agency.customerId,
             },
             create: {
               users: {
@@ -261,6 +262,7 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
               state: agency.state,
               whiteLabel: agency.whiteLabel,
               agencyLogo: agency.agencyLogo,
+              customerId: agency.customerId,
               SidebarOption: {
                 create: [
                   {
