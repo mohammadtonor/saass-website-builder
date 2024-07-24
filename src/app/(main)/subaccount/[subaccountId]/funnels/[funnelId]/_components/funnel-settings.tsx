@@ -38,6 +38,7 @@ console.log(subaccountDetails?.connectAccountId);
   const products = await getConnectAccountProducts(
     subaccountDetails.connectAccountId
   )
+console.log(products);
 
   return (
     <div className="flex gap-4 flex-col xl:!flex-row">
