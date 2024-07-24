@@ -55,6 +55,7 @@ export const getConnectAccountProducts = async (stripeAccount: string) => {
       stripeAccount,
     }
   )
+  console.log(" products", products.data);
   
   return products.data
 }
