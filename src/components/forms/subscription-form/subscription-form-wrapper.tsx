@@ -56,14 +56,14 @@ const SubscriptionFormWrapper = ({ customerId, planExists }: Props) => {
         }
       )
 
-      console.log(subscriptionResponse.json());
       
-
+      
       const subscriptionResponseData = await subscriptionResponse.json()
       setSubscription({
         clientSecret: subscriptionResponseData.clientSecret,
         subscriptionId: subscriptionResponseData.subscriptionId,
       })
+      console.log(subscriptionResponseData);
       if (planExists) {
         toast({
           title: 'Success',
