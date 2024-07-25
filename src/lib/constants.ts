@@ -62,6 +62,20 @@ export const pricingCards = [
     { title: 'Priority Support', id: 'prod_QVhdFPVZL8aAZe' },
   ]
 
+  export type EditorBtns =
+  | 'text'
+  | 'container'
+  | 'section'
+  | 'contactForm'
+  | 'paymentForm'
+  | 'link'
+  | '2Col'
+  | 'video'
+  | '__body'
+  | 'image'
+  | null
+  | '3Col'
+
   export const icons = [
   {
     value: 'chart',
