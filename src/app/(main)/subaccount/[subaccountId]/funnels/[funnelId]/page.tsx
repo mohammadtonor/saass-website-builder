@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import React from 'react'
 import FunnelSettings from './_components/funnel-settings';
 import FunnelSteps from './_components/funnel-steps';
+import BlurPage from '@/components/global/blur-page';
 
 type Props = {
     params: {funnelId: string; subaccountId: string}
@@ -16,17 +17,14 @@ const FunnelIdPage = async ({params}: Props) => {
 
   return (
     <>
-        <Link
-            href={`/subaccount/${params.subaccountId}/funnels`}
-            className='flex justify-between gap-4 mb-4 text-muted-foreground'
-            >
-            Back
-        </Link>
-        <h1 className='text-3xl mb-8'>{funnelPages.name}</h1>
-        <Tabs
-        defaultValue="steps"
-        className="w-full"
+      <Link
+        href={`/subaccount/${params.subaccountId}/funnels`}
+        className="flex justify-between gap-4 mb-4 text-muted-foreground"
       >
+        Back
+      </Link>
+      <h1 className="text-3xl mb-8">{funnelPages.name}</h1>
+      <Tabs defaultValue="steps" className="w-full">
         <TabsList className="grid  grid-cols-2 w-[50%] ">
           <TabsTrigger value="steps">Steps</TabsTrigger>
           <TabsTrigger value="settings">Settings</TabsTrigger>
@@ -47,7 +45,7 @@ const FunnelIdPage = async ({params}: Props) => {
         </TabsContent>
       </Tabs>
     </>
-  )
+  );
 }
 
 export default FunnelIdPage

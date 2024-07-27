@@ -11,7 +11,7 @@ export type EditorElement = {
   styles: React.CSSProperties;
   name: string;
   type: EditorBtns;
-  content: EditorElement[] | {};
+  content: EditorElement[] | { href?: string; innerText?: string; src?: string };
 };
 
 export type Editor = {
@@ -101,10 +101,7 @@ const updateAnElement = (
   }
   return editorArray.map((item) => {
     if (item.id === action.payload.elementDetails.id) {
-      return {
-        ...item,
-        content: action.payload.elementDetails.id,
-      };
+      return {...item,  ...action.payload.elementDetails };
     } else if (item.content && Array.isArray(item.content)) {
       return {
         ...item,
@@ -365,10 +362,10 @@ export const EditorContext = createContext<{
 })
 
 type EditiorProps = {
+  children: React.ReactNode;
     subaccountId: string;
     funnelId: string;
     pageDetails: FunnelPage;
-    children: React.ReactNode;
 };
 
 const EditorProvider = (props: EditiorProps) => {

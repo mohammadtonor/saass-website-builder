@@ -1,7 +1,7 @@
 "use client"
 import { NotificationWithUser } from '@/lib/types'
 import { UserButton } from '@clerk/nextjs'
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '../ui/sheet'
 import { Bell } from 'lucide-react'
@@ -10,18 +10,20 @@ import { Switch } from '../ui/switch'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { ModeToggle } from './mode-toggle'
 import { Separator } from '../ui/separator'
+import { useParams, usePathname } from 'next/navigation'
 
 type Props = {
     notifications: NotificationWithUser | []
     role?: string
     className?: string
     subAccountId?: string
+    
 }
 
 const InfoBar = ({notifications, subAccountId, className, role}: Props) => {
     const [allNotifications, setAllNotifications] = useState(notifications);
     const [showAll, setShowAll] = useState(true);
-
+    
     const handleClick = () => {
         if(!showAll) {
             setAllNotifications(notifications)

@@ -29,6 +29,7 @@ import CustomModal from '../global/custom-modal'
 import SubAccountDetails from '../forms/subaccount-details'
 import { Separator } from '../ui/separator'
 import { icons } from '@/lib/constants'
+import { usePathname } from 'next/navigation'
 
 type Props = {
   defaultOpen?: boolean
@@ -51,7 +52,7 @@ const MenuOptions = ({
 }: Props) => {
   const { setOpen } = useModal()
   const [isMounted, setIsMounted] = useState(false)
-
+  const [isEdit, setIsEdit] = useState(false)
   const openState = useMemo(
     () => (defaultOpen ? { open: true } : {}),
     [defaultOpen]
@@ -61,6 +62,10 @@ const MenuOptions = ({
     setIsMounted(true)
   }, [])
 
+  const params = usePathname();
+  useEffect(() => {
+      setIsEdit(params.includes('editor'))
+  }, [params]);
   if (!isMounted) return
 
   return (
@@ -70,7 +75,10 @@ const MenuOptions = ({
     >
       <SheetTrigger
         asChild
-        className="absolute left-4 top-4 z-[100] md:!hidden felx"
+        className={clsx(
+          "absolute left-4 top-4 z-[100] md:!hidden felx",
+          {"hidden": isEdit}
+        )}
       >
         <Button
           variant="outline"
@@ -123,7 +131,7 @@ const MenuOptions = ({
                 </div>
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-80 h-80 mt-4 z-[200]">
+            <PopoverContent className="w-72 h-[370px] z-[200]">
               <Command className="rounded-lg">
                 <CommandInput placeholder="Search Accounts..." />
                 <CommandList className="pb-16">
@@ -132,7 +140,7 @@ const MenuOptions = ({
                     user?.role === 'AGENCY_ADMIN') &&
                     user?.Agency && (
                       <CommandGroup heading="Agency">
-                        <CommandItem className="!bg-transparent my-2 text-primary broder-[1px] border-border p-2 rounded-md hover:!bg-muted cursor-pointer transition-all">
+                        <CommandItem className="!bg-transparent text-primary broder-[1px] border-border p-2 rounded-md hover:!bg-muted cursor-pointer transition-all">
                           {defaultOpen ? (
                             <Link
                               href={`/agency/${user?.Agency?.id}`}
@@ -182,7 +190,7 @@ const MenuOptions = ({
                   <CommandGroup heading="Accounts">
                     {!!subAccounts
                       ? subAccounts.map((subaccount) => (
-                          <CommandItem key={subaccount.id}>
+                          <CommandItem key={subaccount.id} className='!bg-transparent text-primary broder-[1px] border-border p-2 rounded-md hover:!bg-muted cursor-pointer transition-all'>
                             {defaultOpen ? (
                               <Link
                                 href={`/subaccount/${subaccount.id}`}

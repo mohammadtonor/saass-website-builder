@@ -7,6 +7,7 @@ import  Sidebar  from '@/components/sidebar/index'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import BlurPage from '@/components/global/blur-page'
+import CoverPage from '@/components/global/CoverPage'
 
 type Props = {
     children: React.ReactNode
@@ -16,12 +17,11 @@ type Props = {
 const SubaccountLayout = async ({children, params}: Props) => {
     const agencyId = await verifyAndAcceptInvitation()
     if(!agencyId) return <Unauthorized />
-
+    let IsEditt= false;
     const user = await currentUser()
     if(!user) return redirect('/');
 
     let notifications: any = []
-    console.log(user.privateMetadata.role);
     
     if (!user.privateMetadata.role) {
         return <Unauthorized />
@@ -58,19 +58,21 @@ const SubaccountLayout = async ({children, params}: Props) => {
         type="subaccount"
       />
 
-      <div className="md:pl-[300px]">
+      <CoverPage>
         <div className="relative">
             <BlurPage>
                 <InfoBar
                     notifications={notifications}
                     role={user.privateMetadata.role as Role}
                     subAccountId={params.subaccountId as string}
-                />
+                    />
                 {children}
             </BlurPage>
         </div>
+    </CoverPage>
       </div>
-    </div>
+    
+    
   )
 }
 
