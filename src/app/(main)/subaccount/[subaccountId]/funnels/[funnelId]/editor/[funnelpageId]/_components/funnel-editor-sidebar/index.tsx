@@ -7,6 +7,7 @@ import React from 'react'
 import TabList from './tabs'
 import SettingsTab from './tabs/settings-tab'
 import MediaBucketTeb from './tabs/media-bucket-teb'
+import ComponentsTab from './tabs/components-tsb'
 
 type Props = {
     subaccountId: string
@@ -59,6 +60,7 @@ const FunnelEditorSidebar = ({subaccountId}: Props) => {
                   You can drag and drop components on the canvas
                 </SheetDescription>
               </SheetHeader>
+              <ComponentsTab />
             </TabsContent>
           </div>
         </SheetContent>

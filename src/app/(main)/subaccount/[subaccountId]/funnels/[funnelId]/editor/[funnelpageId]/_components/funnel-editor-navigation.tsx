@@ -74,6 +74,8 @@ const FunnelEditorNavigation = ({
       }
 
       const  handleOnSave = async () => {
+        console.log(state.editor.elements);
+        
         const content = JSON.stringify(state.editor.elements);
         try {
           const response = await upsertFunnelPage(

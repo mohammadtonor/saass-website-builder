@@ -933,6 +933,7 @@ export const getUserPermissions = async (userId?: string) => {
         pathName: funnelPage.pathName,
         order: funnelPage.order,
         funnelId,
+        content: funnelPage.content
        },
       create: {
         ...funnelPage,
@@ -961,3 +962,12 @@ export const getUserPermissions = async (userId?: string) => {
     return response
   }
   
+  export const getFunnelPageDetails = async (funnelPageId: string) => {
+    const response = await db.funnelPage.findUnique({
+      where: {
+        id: funnelPageId,
+      },
+    })
+  
+    return response
+  }

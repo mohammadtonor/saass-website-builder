@@ -10,13 +10,13 @@ type Props = {
     params: {
         subaccountId: string
         funnelId: string
-        funnelPgaeId: string
+        funnelpageId: string
     }
 }
 
 const FunnelPageId = async ({params}: Props) => {
     const funnelPageDetails = await db.funnelPage.findFirst({
-        where: { id: params.funnelPgaeId }
+        where: { id: params.funnelpageId }
     })
 
     if(!funnelPageDetails) {
@@ -37,7 +37,7 @@ const FunnelPageId = async ({params}: Props) => {
         />
         <div className="h-full flex justify-center">
           <FunnelEditor 
-            funnelPageId={params.funnelPgaeId}
+            funnelPageId={params.funnelpageId}
           />
         </div>
         <FunnelEditorSidebar 
