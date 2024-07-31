@@ -12,7 +12,7 @@ const TwoColumnPlaceholder = (props: Props) => {
     <div
         draggable
         onDragStart={(e) => handleOnDragStart(e, '2Col')}
-        className='h-14 w-14 bg-muted/70 rounded-lg flex items-center justify-center gap-[2px]'
+        className='h-14 w-14 p-[6px] bg-muted/70 rounded-lg flex items-center justify-center gap-[2px]'
     >
         <div className="border-dashed border-[1px] h-full rounded-sm bg-muted border-muted-foreground/50 w-full"></div>
         <div className="border-dashed border-[1px] h-full rounded-sm bg-muted border-muted-foreground/50 w-full"></div>

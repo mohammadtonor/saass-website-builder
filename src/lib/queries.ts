@@ -971,3 +971,30 @@ export const getUserPermissions = async (userId?: string) => {
   
     return response
   }
+
+export const getDomainContent = async (subDomainName: string) => {
+  const response = await db.funnel.findUnique({
+    where: {
+      subDomainName
+    },
+    include: { FunnelPages: true}
+  });
+
+  return response;
+}
+
+export const getPipelines = async (subacountId: string) => {
+  const response = await db.pipeline.findMany({
+    where: {
+      subAccountId: subacountId
+    },
+    include: {
+      Lane: {
+        include: {
+          Tickets: true
+        }
+      }
+    }
+  });
+  return response;
+}
